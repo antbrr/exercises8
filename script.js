@@ -1,51 +1,53 @@
 
+//Retrieving HTML Elements
 const bikeListElement = document.getElementById("bikeList")
 const bikeName = document.getElementById("name")
 const bikeGears = document.getElementById("gears")
 const addBike = document.getElementById("addBike")
 
+//Initializing empty bike array
 bike_list = []
 
-addBike.addEventListener("click", function(ev){
+//Event listener for the add bike button
+addBike.addEventListener("click", function (ev) {
+    //Prevent page reload
     ev.preventDefault()
-    console.log(bike_list.includes(bikeName.value))
-    if(bikeName.value != "" && !(bike_list.some(bike => bike.name === bikeName.value))){
+    //If bike name is empty or the bike name is already in the list, STOP.
+    if (bikeName.value != "" && !(bike_list.some(bike => bike.name === bikeName.value))) {
         const bike = {
-            name : bikeName.value,
-            gears : gears.value
-            };
-    bike_list.push(bike)
-    updateBikes()
+            name: bikeName.value,
+            gears: gears.value
+        };
+        bike_list.push(bike)
+        updateBikes()
     } else alert("Bike name is blank or list already contains that bikename")
 
 });
 
-function updateBikes(){
-    bikeListElement.innerHTML =""
-    for(let bike of bike_list){
+function updateBikes() {
+    bikeListElement.innerHTML = ""
+    for (let bike of bike_list) {
         const newLi = document.createElement("li")
-        const content1 = document.createTextNode(bike.name)
-        const content2 = document.createTextNode(bike.gears)
+        const name = document.createTextNode(bike.name)
+        const gears = document.createTextNode(bike.gears)
         const btn = document.createElement("button")
         const cross = document.createTextNode("X")
         btn.appendChild(cross)
-        btn.addEventListener("click",function(){
+        newLi.appendChild(name)
+        newLi.appendChild(gears)
+        newLi.appendChild(btn)
+        bikeListElement.appendChild(newLi)
+        bikeName.value = ""
+        bikeName.focus()
+        btn.addEventListener("click", function () {
+            //Remove element from page
             bikeListElement.removeChild(newLi)
+            //Remove element from array
             const index = bike_list.map(bike => bike.name).indexOf(bike.name);
             if (index > -1) {
                 bike_list.splice(index, 1); // 2nd parameter means remove one item only
-              }
+            }
         })
-        newLi.appendChild(content1)
-        newLi.appendChild(content2)
-        newLi.appendChild(btn)
-
-        bikeListElement.appendChild(newLi)
-        bikeName.value=""
-        bikeName.focus()
+       
     }
 }
-
-
-    
-
