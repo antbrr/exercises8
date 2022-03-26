@@ -27,14 +27,11 @@ addBike.addEventListener("click", function (ev) {
 function updateBikes() {
     bikeListElement.innerHTML = ""
     for (let bike of bike_list) {
-        const newLi = document.createElement("li")
-        const name = document.createTextNode(bike.name)
-        const gears = document.createTextNode(bike.gears)
-        const btn = document.createElement("button")
-        const cross = document.createTextNode("X")
+        let newLi = document.createElement("li")
+        newLi.innerHTML = `${bike.name}  ${bike.gears} `
+        let btn = document.createElement("button")
+        let cross = document.createTextNode("X")
         btn.appendChild(cross)
-        newLi.appendChild(name)
-        newLi.appendChild(gears)
         newLi.appendChild(btn)
         bikeListElement.appendChild(newLi)
         bikeName.value = ""
